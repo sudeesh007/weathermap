@@ -1,0 +1,31 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Information</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body  {% if exception_occurred %}
+style="background-image: url('https://img.peapix.com/2fffbb02186449b28ad78885c65f7755_UHD.jpg');" 
+{% else %}
+style="background-image: url('{{ image_url }}');"
+{% endif %}>>
+    
+    <div class="weather-container">
+        <h1>Weather Information</h1>
+        <img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png" alt="Weather Icon" class="weather-icon">
+        <div class="temperature">{{ temp }}°C</div>
+        <div class="description">{{ description|title }}</div>
+        <div class="date">{{ day }}</div>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="city" placeholder="Enter city">
+            <input type="submit" value="Get Weather">
+        </form>
+    </div>
+</body>
+</html>
